@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>심리 체크인 로그인</title>
+  <script defer src="https://unpkg.com/react@17/umd/react.development.js"></script>
+  <script defer src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+  <script defer src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      background: linear-gradient(to right, #fdf2e9, #ffe9dc);
+      font-family: 'Noto Sans KR', sans-serif;
+      color: #3e2f1c;
+    }
+  </style>
+</head>
+<body>
+  <div id="root"></div>
+
+  <script type="text/babel">
+    function LoginPage() {
+      const [email, setEmail] = React.useState('');
+      const [password, setPassword] = React.useState('');
+
+      const handleLogin = (e) => {
+        e.preventDefault();
+        console.log('Logging in with:', { email, password });
+      };
+
+      return (
+        <div className="min-h-screen flex items-center justify-center">
+          <div className="bg-[#fff6eb] p-10 rounded-2xl shadow-xl w-full max-w-md border border-[#f0e4d7]">
+            <h2 className="text-3xl font-bold text-center text-[#d97b41] mb-8">
+              심리 체크인 로그인
+            </h2>
+            <form onSubmit={handleLogin} className="space-y-5">
+              <div>
+                <label className="block text-sm font-semibold text-[#3e2f1c] mb-2">이메일</label>
+                <input
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  className="w-full px-4 py-2 border border-[#f0e4d7] rounded-md focus:outline-none focus:ring-2 focus:ring-[#d97b41] bg-[#fffaf6] placeholder-[#a09080]"
+                  placeholder="example@checkin.com"
+                  required
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-semibold text-[#3e2f1c] mb-2">비밀번호</label>
+                <input
+                  type="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  className="w-full px-4 py-2 border border-[#f0e4d7] rounded-md focus:outline-none focus:ring-2 focus:ring-[#d97b41] bg-[#fffaf6] placeholder-[#a09080]"
+                  placeholder="비밀번호를 입력하세요"
+                  required
+                />
+              </div>
+              <button
+                type="submit"
+                className="w-full py-2 bg-[#d97b41] hover:bg-[#b96133] text-white font-semibold rounded-md transition duration-200 shadow-md"
+              >
+                로그인
+              </button>
+            </form>
+          </div>
+        </div>
+      );
+    }
+
+    ReactDOM.render(<LoginPage />, document.getElementById('root'));
+  </script>
+</body>
+</html>
