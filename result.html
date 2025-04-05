@@ -30,14 +30,25 @@
     }
     .score-box {
       margin-top: 40px;
-      font-size: 22px;
+      font-size: 18px;
       background: #ecfdf5;
       padding: 20px;
       border-radius: 12px;
-      font-weight: bold;
+      font-weight: normal;
+      text-align: left;
+      line-height: 1.6;
     }
-    .home-btn {
-      margin-top: 50px;
+    .preview {
+      margin-top: 30px;
+      text-align: left;
+    }
+    .preview img {
+      width: 100%;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+    .home-btn, .pdf-btn {
+      margin-top: 30px;
       padding: 12px 24px;
       font-size: 16px;
       background: #10b981;
@@ -45,50 +56,64 @@
       border: none;
       border-radius: 8px;
       cursor: pointer;
+      margin-right: 10px;
     }
-    .home-btn:hover {
+    .home-btn:hover, .pdf-btn:hover {
       background: #059669;
     }
   </style>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 </head>
 <body>
-  <div class="container">
+  <div class="container" id="pdf-content">
     <h1>검사 결과</h1>
     <p>당신의 심리적 특성은 아래와 같습니다:</p>
     <div class="score-box" id="scoreBox">결과 계산 중...</div>
+    <button class="pdf-btn" onclick="generatePDF()">PDF로 저장하기</button>
     <button class="home-btn" onclick="goHome()">홈으로 돌아가기</button>
   </div>
 
+  <div class="preview">
+    <h2>예시 PDF 미리보기</h2>
+    <img src="/mnt/data/스크린샷%202025-04-05%2017.19.35.png" alt="예시 PDF 미리보기 이미지">
+  </div>
+
   <script>
-    // 예시: 실제 환경에서는 sessionStorage에서 가져오는 방식 추천
-const rawScore = Math.floor(Math.random() * 61) - 30;
-const score = Math.max(0, rawScore + 30); // -30 ~ +30 → 0 ~ 60으로 변환
-const scoreBox = document.getElementById("scoreBox");
+    const rawScore = Math.floor(Math.random() * 61) - 30;
+    const score = Math.max(0, rawScore + 30);
+    const scoreBox = document.getElementById("scoreBox");
 
-let message = "";
+    let message = "점수: " + score + "점\n\n";
 
-if (score >= 51) {
-  message = "당신은 매우 외향적이고 감정 표현이 풍부한 편입니다.";
-} else if (score >= 41) {
-  message = "당신은 외향적인 성향이며 사람들과의 교류를 즐깁니다.";
-} else if (score >= 31) {
-  message = "당신은 다소 외향적이며 감정에 공감하는 편입니다.";
-} else if (score >= 21) {
-  message = "당신은 중립적인 성향입니다. 상황에 따라 유연하게 대처합니다.";
-} else if (score >= 11) {
-  message = "당신은 다소 내향적이며 신중한 성격을 가지고 있습니다.";
-} else if (score >= 1) {
-  message = "당신은 내향적인 성향이며 혼자 있는 시간을 선호합니다.";
-} else {
-  message = "당신은 매우 내향적이며 내면 세계에 집중하는 편입니다.";
-}
+    if (score >= 51) {
+      message += "당신은 매우 외향적이고 감정 표현이 풍부한 편입니다. 새로운 환경이나 낯선 사람과의 만남에 거리낌이 없으며, 자신의 생각과 감정을 자유롭게 표현하는 데 능숙합니다. 타인의 감정에도 민감하게 반응하며, 공동체 활동이나 팀워크에서도 주도적인 역할을 할 가능성이 높습니다.";
+    } else if (score >= 41) {
+      message += "당신은 외향적인 성향이며 사람들과의 교류를 즐깁니다. 다양한 사회적 관계 속에서 활력을 얻고, 타인과의 소통에서 만족감을 느끼는 편입니다. 새로운 활동에 대한 관심이 많고, 활발한 분위기에서 역량을 발휘하는 유형입니다.";
+    } else if (score >= 31) {
+      message += "당신은 다소 외향적이며 감정에 공감하는 편입니다. 때때로 조용한 시간을 선호하지만, 전반적으로 타인과의 관계를 중요하게 생각하며, 감정적 유대와 정서적 소통에 관심이 많습니다. 상황에 따라 리더십을 발휘하기도 합니다.";
+    } else if (score >= 21) {
+      message += "당신은 중립적인 성향입니다. 외향성과 내향성 사이에서 균형 잡힌 태도를 보이며, 상황에 따라 적절한 반응을 선택할 수 있는 유연한 성격입니다. 혼자 있는 시간과 사람들과의 시간 모두에서 에너지를 얻을 수 있습니다.";
+    } else if (score >= 11) {
+      message += "당신은 다소 내향적이며 신중한 성격을 가지고 있습니다. 혼자만의 시간을 소중히 여기고, 사려 깊은 의사결정을 선호합니다. 타인과의 관계에서도 깊이 있는 소통을 추구하며, 감정보다 이성적인 접근을 중요시하는 경향이 있습니다.";
+    } else if (score >= 1) {
+      message += "당신은 내향적인 성향이며 혼자 있는 시간을 선호합니다. 감정 표현보다는 관찰과 성찰을 중시하며, 주변 자극에 민감하게 반응할 수 있습니다. 타인의 시선보다는 내면의 안정감을 추구하며, 조용한 환경에서 집중력을 높이는 스타일입니다.";
+    } else {
+      message += "당신은 매우 내향적이며 내면 세계에 집중하는 편입니다. 깊은 사유와 자기 성찰을 통해 삶의 방향을 설정하며, 혼자 있는 시간을 통해 에너지를 회복합니다. 사회적 자극보다는 정적인 활동에 더 큰 만족을 느끼며, 독립적인 사고가 강한 편입니다.";
+    }
 
-scoreBox.innerText = `점수: ${score}점\n${message}`;
-
-
+    scoreBox.innerText = message;
 
     function goHome() {
       window.location.href = "심리체크인.html";
+    }
+
+    function generatePDF() {
+      const element = document.getElementById("pdf-content");
+      html2pdf().set({
+        filename: '심리검사결과.pdf',
+        html2canvas: { scale: 2 },
+        jsPDF: { format: 'a4', orientation: 'portrait' }
+      }).from(element).save();
     }
   </script>
 </body>
