@@ -42,8 +42,10 @@
       margin-top: 30px;
       text-align: left;
     }
-    .preview img {
+    .preview iframe {
       width: 100%;
+      height: 600px;
+      border: none;
       border-radius: 12px;
       box-shadow: 0 4px 10px rgba(0,0,0,0.1);
     }
@@ -70,12 +72,13 @@
     <p>당신의 심리적 특성은 아래와 같습니다:</p>
     <div class="score-box" id="scoreBox">결과 계산 중...</div>
     <button class="pdf-btn" onclick="generatePDF()">PDF로 저장하기</button>
+    <button class="pdf-btn" onclick="window.print()">인쇄하기</button>
     <button class="home-btn" onclick="goHome()">홈으로 돌아가기</button>
   </div>
 
   <div class="preview">
     <h2>예시 PDF 미리보기</h2>
-    <img src="/mnt/data/스크린샷%202025-04-05%2017.19.35.png" alt="예시 PDF 미리보기 이미지">
+    <iframe src="/mnt/data/우울증 검사, 자가진단 테스트 - 국내 1위 심리상담, 멘탈케어 앱.pdf"></iframe>
   </div>
 
   <script>
