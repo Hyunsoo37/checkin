@@ -1,0 +1,61 @@
+body {
+    font-family: 'Noto Sans KR', sans-serif; /* 요청된 폰트로 변경 */
+    background: linear-gradient(to bottom, #fdf2e9, #ffe9dc); /* 따뜻한 그라데이션 */
+    margin: 0;
+    padding: 20px;
+    color: #3e2f1c; /* 짙은 브라운 텍스트 */
+  }
+  
+  .activity-container {
+    margin: 20px auto;
+    padding: 40px;
+    max-width: 900px;
+    background-color: #fff;
+    border-radius: 16px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+  }
+  
+  .activity-header {
+    text-align: center;
+    margin-bottom: 40px;
+  }
+  
+  .activity-header h1 {
+    font-size: 30px;
+    color: #3e2f1c;
+  }
+  
+  .activity-header p {
+    font-size: 18px;
+    color: #5e503f;
+  }
+  
+  .activity-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+  }
+  
+  .activity-item {
+    background-color: #ffe9dd;
+    border-radius: 12px;
+    padding: 20px;
+    width: calc(50% - 20px);
+    box-sizing: border-box;
+    text-align: center;
+    font-size: 18px;
+    color: #5f3c1a;
+    transition: transform 0.3s ease;
+  }
+  
+  .activity-item:hover {
+    transform: scale(1.05);
+  }
+  
+  @media (max-width: 768px) {
+    .activity-item {
+      width: 100%;
+    }
+  }
+  
