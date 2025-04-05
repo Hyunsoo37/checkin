@@ -4,8 +4,20 @@
   <meta charset="UTF-8" />
   <title>심리 체크인</title>
   <link rel="stylesheet" href="checkin.css">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
+  <header>
+    <h1>심리 체크인</h1>
+    <nav>
+      <a href="심리체크인.html">홈</a>
+      <a href="checkin.html">검사하기</a>
+      <a href="result.html">결과</a>
+      <a href="hospital.html">병원 찾기</a>
+      <a href="login.html">로그인</a>
+    </nav>
+  </header>
+
   <div class="container">
     <h2 style="text-align:center; font-size: 32px; color: #ee9528;">심리 체크인</h2>
     <div id="questions-container"></div>
@@ -68,7 +80,6 @@
         all[idx + 1].scrollIntoView({ behavior: "smooth", block: "center" });
       }
 
-      // 모든 질문에 응답했는지 확인 후 결과 표시
       const allAnswered = answers.filter(a => typeof a === "number").length === questions.length;
       if (allAnswered) {
         resultBox.style.display = "block";

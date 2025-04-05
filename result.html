@@ -25,6 +25,17 @@
   </style>
 </head>
 <body>
+  <header>
+    <h1>심리 체크인</h1>
+    <nav>
+      <a href="심리체크인.html">홈</a>
+      <a href="checkin.html">검사하기</a>
+      <a href="result.html">결과</a>
+      <a href="hospital.html">병원 찾기</a>
+      <a href="login.html">로그인</a>
+    </nav>
+  </header>
+
   <div class="container" id="pdf-content">
     <h1>심리검사 결과</h1>
     <p>당신의 심리적 특성은 아래와 같습니다:</p>
@@ -60,7 +71,7 @@
 
   <div id="previewModal" class="preview-modal no-print">
     <div class="preview-content">
-      <span class="close-btn" onclick="closePreview()">&times;</span>
+      <span class="close-btn" onclick="closePreview()">×</span>
       <h2>인증서 미리보기</h2>
       <p>아래는 PDF로 변환될 내용의 미리보기입니다. 확인 후 다운로드 또는 인쇄를 진행해주세요.</p>
       <div id="pdf-preview" class="preview-iframe"></div>

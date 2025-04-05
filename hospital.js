@@ -1,145 +1,92 @@
 // Google Maps API 초기화
 function initMap() {
-    const map = new google.maps.Map(document.getElementById("map"), {
-      center: { lat: 37.5665, lng: 126.9780 }, // 서울 시청 좌표
+  const centerPos = { lat: 37.6288, lng: 127.2162 }; // 남양주시 경춘로 883-36 (금곡동)
+  const map = new google.maps.Map(document.getElementById("map"), {
+      center: centerPos,
       zoom: 13,
-    });
-  
-    // 현재 위치 버튼 클릭 이벤트
-    document.getElementById("current-location-btn").addEventListener("click", () => {
-      if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(
-          (position) => {
-            const pos = {
-              lat: position.coords.latitude,
-              lng: position.coords.longitude,
-            };
-            map.setCenter(pos);
-            map.setZoom(15);
-            searchHospitals(pos);
-          },
-          () => {
-            alert("현재 위치를 가져올 수 없습니다. 위치 서비스 권한을 확인해주세요.");
-          }
-        );
-      } else {
-        alert("이 브라우저에서는 위치 서비스를 지원하지 않습니다.");
-      }
-    });
-  
-    // 검색 버튼 클릭 이벤트
-    document.getElementById("search-btn").addEventListener("click", () => {
-      const location = document.getElementById("location").value;
-      if (location) {
-        // 여기에 실제 주소 검색 API 호출 코드가 들어갑니다
-        // 임시로 서울 시청 좌표 사용
-        const pos = { lat: 37.5665, lng: 126.9780 };
-        map.setCenter(pos);
-        searchHospitals(pos);
-      } else {
-        alert("주소 또는 지역명을 입력해주세요.");
-      }
-    });
-  
-    // 병원 검색 함수 (실제로는 API 호출이 필요)
-    function searchHospitals(position) {
-      // 임시 데이터 - 실제로는 API에서 가져와야 함
+  });
+
+  // 지정된 위치에 마커 추가
+  new google.maps.Marker({
+      position: centerPos,
+      map: map,
+      title: "남양주시자원봉사센터",
+      icon: {
+          url: "http://maps.google.com/mapfiles/ms/icons/blue-dot.png", // 파란색 마커로 표시
+      },
+  });
+
+  // 정신과 병원 검색 함수
+  function searchHospitals(position) {
+      // 목업 데이터 - 남양주시 및 인근 지역 기준
       const mockHospitals = [
-        {
-          name: "서울대학교병원",
-          address: "서울특별시 종로구 대학로 101",
-          phone: "02-2072-0000",
-          distance: "1.2km",
-          type: "internal",
-          lat: 37.5794,
-          lng: 126.9980
-        },
-        {
-          name: "아산병원",
-          address: "서울특별시 송파구 올림픽로 43길 88",
-          phone: "02-3010-3114",
-          distance: "3.5km",
-          type: "surgical",
-          lat: 37.5265,
-          lng: 127.1064
-        },
-        {
-          name: "세브란스병원",
-          address: "서울특별시 서대문구 연세로 50-1",
-          phone: "02-2228-0000",
-          distance: "2.8km",
-          type: "pediatric",
-          lat: 37.5602,
-          lng: 126.9421
-        }
+          {
+              name: "남양주정신건강의학과의원",
+              address: "경기도 남양주시 경춘로 123",
+              phone: "031-555-1234",
+              distance: "3.2km",
+              type: "psychiatry",
+              lat: 37.6300,
+              lng: 127.2200,
+          },
+          {
+              name: "진접신경정신과",
+              address: "경기도 남양주시 진접읍 장현로 456",
+              phone: "031-567-8901",
+              distance: "5.7km",
+              type: "psychiatry",
+              lat: 37.7200,
+              lng: 127.1900,
+          },
+          {
+              name: "구리정신건강의학과",
+              address: "경기도 구리시 경춘로 789",
+              phone: "031-234-5678",
+              distance: "8.4km",
+              type: "psychiatry",
+              lat: 37.6000,
+              lng: 127.1300,
+          },
       ];
-  
-      // 지도에 마커 표시
-      mockHospitals.forEach(hospital => {
-        new google.maps.Marker({
-          position: { lat: hospital.lat, lng: hospital.lng },
-          map: map,
-          title: hospital.name
-        });
+
+      // 지도에 병원 마커 표시
+      mockHospitals.forEach((hospital) => {
+          new google.maps.Marker({
+              position: { lat: hospital.lat, lng: hospital.lng },
+              map: map,
+              title: hospital.name,
+          });
       });
-  
+
       // 병원 목록 업데이트
       updateHospitalList(mockHospitals);
-    }
-  
-    // 병원 목록 업데이트 함수
-    function updateHospitalList(hospitals) {
+  }
+
+  // 병원 목록 업데이트 함수
+  function updateHospitalList(hospitals) {
       const hospitalList = document.getElementById("hospital-list");
       hospitalList.innerHTML = "";
-  
-      const selectedType = document.getElementById("hospital-type").value;
-      const maxDistance = parseInt(document.getElementById("distance").value);
-  
-      hospitals.forEach(hospital => {
-        // 필터링 조건
-        if ((selectedType === "all" || hospital.type === selectedType) && 
-            parseFloat(hospital.distance) <= maxDistance) {
+
+      hospitals.forEach((hospital) => {
           const card = document.createElement("div");
           card.className = "hospital-card";
           card.innerHTML = `
-            <div class="hospital-name">${hospital.name}</div>
-            <div class="hospital-info">
-              <i class="fas fa-map-marker-alt"></i> ${hospital.address}
-            </div>
-            <div class="hospital-info">
-              <i class="fas fa-phone"></i> ${hospital.phone}
-            </div>
-            <div class="hospital-info">
-              <i class="fas fa-walking"></i> 거리: <span class="hospital-distance">${hospital.distance}</span>
-            </div>
-            <div class="hospital-type">${getHospitalTypeName(hospital.type)}</div>
+              <div class="hospital-name">${hospital.name}</div>
+              <div class="hospital-info">
+                  <i class="fas fa-map-marker-alt"></i> ${hospital.address}
+              </div>
+              <div class="hospital-info">
+                  <i class="fas fa-phone"></i> ${hospital.phone}
+              </div>
+              <div class="hospital-info">
+                  <i class="fas fa-walking"></i> 거리: <span class="hospital-distance">${hospital.distance}</span>
+              </div>
+              <div class="hospital-type">정신과</div>
           `;
           hospitalList.appendChild(card);
-        }
       });
-    }
-  
-    // 병원 타입 한글명 변환
-    function getHospitalTypeName(type) {
-      const types = {
-        "internal": "내과",
-        "surgical": "외과",
-        "pediatric": "소아과",
-        "dental": "치과",
-        "ophthalmology": "안과"
-      };
-      return types[type] || "기타";
-    }
-  
-    // 필터 변경 이벤트 리스너
-    document.getElementById("hospital-type").addEventListener("change", () => {
-      // 실제로는 다시 검색을 수행해야 하지만, 여기서는 목업 데이터 사용
-      const currentCenter = map.getCenter();
-      searchHospitals({ lat: currentCenter.lat(), lng: currentCenter.lng() });
-    });
-  
-    document.getElementById("distance").addEventListener("change", () => {
-      const currentCenter = map.getCenter();
-      searchHospitals({ lat: currentCenter.lat(), lng: currentCenter.lng() });
-    });
   }
+
+  // 병원 검색 실행 (고정 위치 사용)
+  searchHospitals(centerPos);
+}

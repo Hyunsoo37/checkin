@@ -1,74 +1,101 @@
 body {
-    font-family: sans-serif;
-    background: linear-gradient(to bottom, #fff6eb, #fff6eb);
-    margin: 0;
-    padding: 20px;
-  }
-  
-  .container {
-    max-width: 700px;
-    margin: auto;
-    background: white;
-    padding: 40px;
-    border-radius: 20px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-  }
-  
-  .question {
-    margin-bottom: 100px;
-    opacity: 0.3;
-    transition: opacity 0.3s ease;
-  }
-  
-  .question.active {
-    opacity: 1;
-  }
-  
-  .question h3 {
-    font-size: 24px;
-    text-align: center;
-  }
-  
-  .scale {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 15px;
-    margin-top: 20px;
-  }
-  
-  .scale span {
-    font-weight: bold;
-    white-space: nowrap;
-  }
-  
-  .dot {
-    border-radius: 50%;
-    border: 2px solid #aaa;
-    background: white;
-    width: 24px;
-    height: 24px;
-    cursor: pointer;
-    transition: transform 0.2s ease, background 0.3s, border-color 0.3s;
-  }
-  
-  .dot:hover {
-    transform: scale(1.2);
-  }
-  
-  .dot.selected {
-    background: #893c13;
-    border-color: #893c13;
-  }
-  
-  .submit-button {
-    margin-top: 20px;
-    padding: 10px 20px;
-    font-size: 18px;
-    background: #ee9528;
-    color: white;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-  }
-  
+  font-family: 'Noto Sans KR', sans-serif; /* 요청된 폰트로 변경 */
+  background: linear-gradient(to bottom, #fdf2e9, #ffe9dc); /* 따뜻한 그라데이션 */
+  margin: 0;
+  padding: 20px;
+  color: #3e2f1c; /* 짙은 브라운 텍스트 */
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 40px;
+  background-color: #fff6eb; /* 부드러운 크림색 헤더 */
+}
+
+header h1 {
+  font-size: 24px;
+  margin: 0;
+}
+
+nav a {
+  margin-left: 20px;
+  text-decoration: none;
+  color: #3e2f1c; /* 짙은 브라운 링크 */
+  font-weight: 500;
+}
+
+.container {
+  max-width: 700px;
+  margin: auto;
+  background: #fff7ef; /* 따뜻한 크림색 배경 */
+  padding: 40px;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05); /* 부드러운 그림자 */
+}
+
+.question {
+  margin-bottom: 100px;
+  opacity: 0.3;
+  transition: opacity 0.3s ease;
+}
+
+.question.active {
+  opacity: 1;
+}
+
+.question h3 {
+  font-size: 24px;
+  text-align: center;
+  color: #3e2f1c; /* 짙은 브라운 */
+}
+
+.scale {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+  margin-top: 20px;
+}
+
+.scale span {
+  font-weight: bold;
+  white-space: nowrap;
+  color: #5e503f; /* 부드러운 브라운 */
+}
+
+.dot {
+  border-radius: 50%;
+  border: 2px solid #f0e4d7; /* 따뜻한 베이지 테두리 */
+  background: #fffaf6; /* 연한 크림색 배경 */
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+  transition: transform 0.2s ease, background 0.3s, border-color 0.3s;
+}
+
+.dot:hover {
+  transform: scale(1.2);
+}
+
+.dot.selected {
+  background: #d97b41; /* 따뜻한 오렌지 */
+  border-color: #d97b41;
+}
+
+.submit-button {
+  margin-top: 20px;
+  padding: 10px 20px;
+  font-size: 18px;
+  background: #d97b41; /* 오렌지 버튼 */
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.submit-button:hover {
+  background: #b96133; /* 호버 시 진한 오렌지 */
+}

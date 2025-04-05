@@ -1,0 +1,135 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Noto Sans KR', sans-serif;
+}
+
+body {
+    margin: 0;
+    font-family: 'Noto Sans KR', sans-serif;
+    background-color: #fdf7f2; /* 따뜻한 베이지 배경 */
+    color: #3e2f1c; /* 짙은 브라운 텍스트 */
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 40px;
+    background-color: #fff6eb; /* 부드러운 크림색 헤더 */
+}
+
+header h1 {
+    font-size: 24px;
+    margin: 0;
+}
+
+nav a {
+    margin-left: 20px;
+    text-decoration: none;
+    color: #3e2f1c;
+    font-weight: 500;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+h2 {
+    font-size: 1.5rem;
+    margin: 20px 0 15px;
+    color: #3e2f1c; /* 짙은 브라운 */
+    border-bottom: 2px solid #f0e4d7; /* 부드러운 베이지 선 */
+    padding-bottom: 10px;
+}
+
+.support-info, .support-form, .support-activities {
+    margin-bottom: 30px;
+    background-color: #fff7ef; /* 따뜻한 크림색 배경 */
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+.details p {
+    margin: 10px 0;
+    color: #5e503f; /* 부드러운 브라운 */
+}
+
+.details i {
+    margin-right: 8px;
+    color: #d97b41; /* 따뜻한 오렌지 아이콘 */
+}
+
+#join-btn {
+    background-color: #d97b41; /* 오렌지 버튼 */
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.3s;
+}
+
+#join-btn:hover {
+    background-color: #b96133; /* 호버 시 진한 오렌지 */
+}
+
+.support-form label {
+    display: block;
+    margin: 10px 0 5px;
+    font-weight: 500;
+    color: #3e2f1c; /* 짙은 브라운 */
+}
+
+.support-form input, .support-form textarea {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 15px;
+    border: 1px solid #f0e4d7; /* 부드러운 베이지 테두리 */
+    border-radius: 4px;
+    background-color: #fff; /* 깨끗한 흰색 입력 필드 */
+}
+
+.support-form button {
+    background-color: #d97b41; /* 오렌지 버튼 */
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+.support-form button:hover {
+    background-color: #b96133; /* 호버 시 진한 오렌지 */
+}
+
+.activity-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 20px;
+}
+
+.activity-card {
+    background-color: #ffe9dc; /* 연한 오렌지 배경 */
+    padding: 15px;
+    border-radius: 8px;
+    text-align: center;
+    color: #d97b41; /* 오렌지 텍스트 */
+    font-weight: 500;
+}
+
+@media (max-width: 768px) {
+    .container {
+        padding: 15px;
+    }
+    
+    .activity-list {
+        grid-template-columns: 1fr;
+    }
+}
