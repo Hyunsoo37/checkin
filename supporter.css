@@ -1,9 +1,29 @@
 body {
-    font-family: 'Noto Sans KR', sans-serif; /* 요청된 폰트로 변경 */
-    background: linear-gradient(to bottom, #fdf2e9, #ffe9dc); /* 따뜻한 그라데이션 */
+    font-family: 'Noto Sans KR', sans-serif;
+    background: linear-gradient(to bottom, #fdf2e9, #ffe9dc);
     margin: 0;
     padding: 20px;
-    color: #3e2f1c; /* 짙은 브라운 텍스트 */
+    color: #3e2f1c;
+  }
+  
+  header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 40px;
+    background-color: #fff6eb;
+  }
+  
+  header h1 {
+    font-size: 24px;
+    margin: 0;
+  }
+  
+  nav a {
+    margin-left: 20px;
+    text-decoration: none;
+    color: #3e2f1c;
+    font-weight: 500;
   }
   
   .activity-container {
@@ -21,7 +41,7 @@ body {
   }
   
   .activity-header h1 {
-    font-size: 30px;
+    font-size: 32px;
     color: #3e2f1c;
   }
   
@@ -44,13 +64,34 @@ body {
     width: calc(50% - 20px);
     box-sizing: border-box;
     text-align: center;
-    font-size: 18px;
     color: #5f3c1a;
-    transition: transform 0.3s ease;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
   }
   
   .activity-item:hover {
     transform: scale(1.05);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+  }
+  
+  .activity-item img {
+    width: 100%;
+    height: auto; /* 고정 높이 대신 비율 유지 */
+    max-height: 200px; /* 최대 높이 제한으로 너무 커지지 않도록 */
+    object-fit: contain; /* 이미지가 잘리지 않고 전체 보이도록 */
+    border-radius: 8px;
+    margin-bottom: 15px;
+  }
+  
+  .activity-item h3 {
+    font-size: 20px;
+    margin: 10px 0;
+    color: #3e2f1c;
+  }
+  
+  .activity-item p {
+    font-size: 16px;
+    color: #5e503f;
+    margin: 0;
   }
   
   @media (max-width: 768px) {
@@ -58,4 +99,3 @@ body {
       width: 100%;
     }
   }
-  

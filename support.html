@@ -11,7 +11,7 @@
 <body>
     <header>
         <h1>심리 체크인</h1>
-        <nav>
+        <nav> 
             <a href="심리체크인.html">홈</a>
             <a href="checkin.html">검사하기</a>
             <a href="result.html">결과</a>
@@ -23,14 +23,17 @@
 
     <div class="container">
         <section class="support-info">
-            <h2>마음 치료 활동</h2>
+            <h2>서포터즈</h2>
             <p>비슷한 고민을 가진 사람들이 모여 서로의 경험을 공유하고, 정서적 지지를 주고받는 서포트 그룹입니다.</p>
             <div class="details">
                 <p><i class="fas fa-map-marker-alt"></i> 장소: 남양주시자원봉사센터 (경기 남양주시 경춘로 883-36)</p>
                 <p><i class="fas fa-clock"></i> 시간: 매주 월요일 저녁 7시 30분</p>
                 <p><i class="fas fa-users"></i> 활동: 서포트 그룹 모임 및 원데이 클래스 (미술치료, 음악치료 등)</p>
+                <p><a href="supporter.html">서포터즈 활동 예시</a></p>
             </div>
-            <button id="join-btn" onclick="showJoinForm()">참여 신청하기</button>
+
+            
+            <button id="join-btn">참여 신청하기</button>
         </section>
 
         <section class="support-form" id="support-form" style="display: none;">
@@ -47,13 +50,6 @@
                 
                 <button type="submit">신청 제출</button>
             </form>
-        </section>
-
-        <section class="support-activities">
-            <h2>활동 예시</h2>
-            <div class="activity-list" id="activity-list">
-                <!-- 활동 목록이 동적으로 로드됩니다 -->
-            </div>
         </section>
     </div>
 
