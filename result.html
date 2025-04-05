@@ -12,7 +12,7 @@
       color: #065f46;
     }
     .container {
-      max-width: 700px;
+      max-width: 800px;
       margin: auto;
       background: white;
       padding: 50px;
@@ -21,14 +21,14 @@
       text-align: center;
     }
     h1 {
-      font-size: 32px;
+      font-size: 36px;
       color: #047857;
     }
     p {
-      font-size: 18px;
+      font-size: 20px;
       margin-top: 30px;
     }
-    .score-box {
+    .score-box, .detail-box, .category-box, .extra-box {
       margin-top: 40px;
       font-size: 18px;
       background: #ecfdf5;
@@ -38,6 +38,19 @@
       text-align: left;
       line-height: 1.6;
       white-space: pre-line;
+    }
+    .category-box h3, .extra-box h3 {
+      color: #047857;
+      margin-bottom: 10px;
+    }
+    .category-box ul, .extra-box ul {
+      list-style: none;
+      padding: 0;
+    }
+    .category-box li::before, .extra-box li::before {
+      content: '✔';
+      margin-right: 8px;
+      color: #10b981;
     }
     .preview-modal {
       display: none;
@@ -54,8 +67,8 @@
       background: white;
       margin: 5% auto;
       padding: 30px;
-      width: 80%;
-      max-width: 800px;
+      width: 90%;
+      max-width: 900px;
       border-radius: 12px;
       position: relative;
     }
@@ -69,7 +82,7 @@
     }
     .preview-iframe {
       width: 100%;
-      height: 80vh;
+      height: 85vh;
       border: none;
       border-radius: 8px;
       margin-top: 20px;
@@ -81,7 +94,7 @@
       align-items: center;
     }
     .preview-inner {
-      width: 700px;
+      width: 800px;
       max-width: 100%;
       padding: 20px;
       background: white;
@@ -114,6 +127,14 @@
       flex-wrap: wrap;
       gap: 10px;
     }
+    .cert-mark {
+      margin-top: 40px;
+      text-align: center;
+    }
+    .cert-mark img {
+      width: 180px;
+      opacity: 0.9;
+    }
     @media print {
       .no-print {
         display: none;
@@ -124,13 +145,33 @@
 </head>
 <body>
   <div class="container" id="pdf-content">
-    <h1>검사 결과</h1>
+    <h1>심리검사 결과</h1>
     <p>당신의 심리적 특성은 아래와 같습니다:</p>
     <div class="score-box" id="scoreBox">결과 계산 중...</div>
-
+    <div class="detail-box" id="detailBox"></div>
+    <div class="category-box">
+      <h3>세부 성향 분석</h3>
+      <ul>
+        <li>자기 통제력</li>
+        <li>사회성 / 대인 관계</li>
+        <li>스트레스 반응 유형</li>
+        <li>감정 조절 능력</li>
+        <li>집중력 및 목표 지향성</li>
+      </ul>
+    </div>
+    <div class="extra-box">
+      <h3>추가 해석</h3>
+      <ul>
+        <li>스트레스 인내력: 높은 편으로 변화에 잘 적응합니다.</li>
+        <li>심리적 복원력: 회복 속도가 빠르며, 좌절에 강한 성격입니다.</li>
+        <li>감정적 자각력: 자신의 감정을 잘 인식하고 관리할 수 있습니다.</li>
+        <li>자기 효능감: 스스로 문제를 해결할 수 있다는 믿음이 강합니다.</li>
+        <li>자기 동기부여: 외부 자극보다 내부 동기로 움직이는 성향입니다.</li>
+      </ul>
+    </div>
     <div class="btn-group">
-      <button class="preview-btn no-print" onclick="showPreview()">PDF 미리보기</button>
-      <button class="pdf-btn no-print" onclick="generatePDF()">PDF로 저장하기</button>
+      <button class="preview-btn no-print" onclick="showPreview()">인증서 미리보기</button>
+      <button class="pdf-btn no-print" onclick="generatePDF()">인증서 저장하기</button>
       <button class="pdf-btn no-print" onclick="window.print()">인쇄하기</button>
       <button class="home-btn no-print" onclick="goHome()">홈으로 돌아가기</button>
     </div>
@@ -139,7 +180,7 @@
   <div id="previewModal" class="preview-modal no-print">
     <div class="preview-content">
       <span class="close-btn" onclick="closePreview()">&times;</span>
-      <h2>PDF 미리보기</h2>
+      <h2>인증서 미리보기</h2>
       <p>아래는 PDF로 변환될 내용의 미리보기입니다. 확인 후 다운로드 또는 인쇄를 진행해주세요.</p>
       <div id="pdf-preview" class="preview-iframe"></div>
       <div style="margin-top: 20px;">
@@ -154,26 +195,36 @@
     const rawScore = Math.floor(Math.random() * 61) - 30;
     const score = Math.max(0, rawScore + 30);
     const scoreBox = document.getElementById("scoreBox");
+    const detailBox = document.getElementById("detailBox");
 
     let message = `점수: ${score}점\n\n`;
+    let detail = '';
 
     if (score >= 51) {
-      message += `당신은 매우 외향적이며 사람들과 함께 있을 때 에너지를 얻는 경향이 있습니다. 새로운 사람들과의 만남이나 활동에 대한 두려움이 거의 없으며, 타인과의 상호작용을 통해 기쁨을 느낍니다. 감정 표현이 풍부하며, 사람들을 이끄는 리더십을 보이기도 합니다. 또한 강한 자신감과 주도성을 가지고 있어 사회적 관계에서도 주도적인 역할을 수행하는 경향이 있습니다.`;
+      message += `당신은 매우 외향적인 성격입니다.`;
+      detail += `✔ 사교성: 높음\n✔ 감정 표현: 풍부\n✔ 리더십: 강함\n✔ 대인관계에서 주도적이고 적극적입니다.`;
     } else if (score >= 41) {
-      message += `당신은 외향적인 성향이 있으며 활발한 사회적 활동을 즐깁니다. 타인과의 소통에서 편안함을 느끼고, 의견 표현에도 주저함이 없습니다. 새로운 환경에도 비교적 빠르게 적응하며, 주변 사람들과 긍정적인 관계를 형성하는 데 능숙합니다.`;
+      message += `당신은 외향적인 성향을 가지고 있습니다.`;
+      detail += `✔ 사람들과의 교류를 즐기며\n✔ 새로운 환경에 잘 적응하고\n✔ 의견 표현에도 능숙합니다.`;
     } else if (score >= 31) {
-      message += `당신은 다소 외향적인 성격을 가지고 있으며, 감정 표현과 타인에 대한 공감 능력이 뛰어납니다. 조용한 환경도 선호하지만 사람들과 함께 있는 시간을 중요하게 여기며, 균형 잡힌 대인관계를 유지하려 노력합니다.`;
+      message += `당신은 다소 외향적인 성격입니다.`;
+      detail += `✔ 감정적 공감 능력이 좋으며\n✔ 균형 잡힌 대인관계를 유지합니다.`;
     } else if (score >= 21) {
-      message += `당신은 외향성과 내향성의 중간 지점에 있는 성향으로, 상황에 따라 적절히 대응할 수 있는 유연함을 갖추고 있습니다. 혼자 있는 시간과 사회적 활동 모두에서 에너지를 얻을 수 있으며, 중립적이고 균형 잡힌 성격으로 다양한 상황에 잘 적응합니다.`;
+      message += `당신은 중립적인 성격입니다.`;
+      detail += `✔ 외향성과 내향성 사이의 균형\n✔ 유연한 사고방식\n✔ 다양한 상황에 잘 적응합니다.`;
     } else if (score >= 11) {
-      message += `당신은 다소 내향적인 성격으로, 조용하고 신중한 태도를 가지고 있습니다. 사적인 공간과 혼자만의 시간이 중요하며, 깊이 있는 관계를 선호합니다. 타인과의 소통보다는 자기 성찰을 통해 내면을 탐색하는 것을 더 선호합니다.`;
+      message += `당신은 다소 내향적인 성격입니다.`;
+      detail += `✔ 조용하고 신중하며\n✔ 깊이 있는 관계를 선호합니다.`;
     } else if (score >= 1) {
-      message += `당신은 내향적인 성향을 가지며 혼자 있는 것을 통해 에너지를 회복합니다. 관찰력이 뛰어나고 상황을 신중히 판단하며, 감정 표현보다는 내면의 안정감을 중시합니다. 깊은 생각과 분석을 통해 문제를 해결하는 경향이 있습니다.`;
+      message += `당신은 내향적인 성향입니다.`;
+      detail += `✔ 혼자 있는 시간에 에너지를 얻고\n✔ 감정보다 이성에 집중합니다.`;
     } else {
-      message += `당신은 매우 내향적인 성향으로, 내면 세계에 깊이 몰입하는 경향이 강합니다. 혼자만의 시간에서 안정과 만족을 찾으며, 감정 표현은 제한적이고 조용한 환경에서 최고의 능력을 발휘합니다. 자기 성찰과 사색을 통해 삶을 바라보며, 타인의 시선보다는 자신의 기준을 더욱 중요시합니다.`;
+      message += `당신은 매우 내향적인 성향입니다.`;
+      detail += `✔ 깊은 사색과 자기 성찰을 즐기며\n✔ 독립적 사고가 강합니다.`;
     }
 
     scoreBox.innerText = message;
+    detailBox.innerText = detail;
 
     function goHome() {
       window.location.href = "심리체크인.html";
@@ -197,10 +248,16 @@
       const buttons = clone.querySelectorAll('.btn-group');
       buttons.forEach(btn => btn.remove());
       clone.classList.remove('container');
-      clone.style.width = '700px';
+      clone.style.width = '800px';
       clone.style.margin = 'auto';
       clone.style.padding = '40px';
       clone.style.boxShadow = 'none';
+
+      const cert = document.createElement('div');
+      cert.className = 'cert-mark';
+      cert.innerHTML = '<img src="/mnt/data/경기도 G마크.jpg" alt="경기도지사 인증 마크">';
+      clone.appendChild(cert);
+
       const wrapper = document.createElement('div');
       wrapper.className = 'preview-inner';
       wrapper.appendChild(clone);
