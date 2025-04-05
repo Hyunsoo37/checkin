@@ -1,0 +1,127 @@
+body {
+    margin: 0;
+    font-family: 'Noto Sans KR', sans-serif;
+    background-color: #fdf7f2;
+    color: #3e2f1c;
+  }
+  
+  header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 40px;
+    background-color: #fff6eb;
+  }
+  
+  header h1 {
+    font-size: 24px;
+    margin: 0;
+  }
+  
+  nav a {
+    margin-left: 20px;
+    text-decoration: none;
+    color: #3e2f1c;
+    font-weight: 500;
+  }
+  
+  .hero {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    padding: 60px 40px;
+    background: linear-gradient(to right, #fdf2e9, #ffe9dc);
+  }
+  
+  .hero-text {
+    flex: 1 1 400px;
+    max-width: 600px;
+  }
+  
+  .start-box {
+    padding: 0;
+    background: none;
+    box-shadow: none;
+    border-radius: 0;
+    max-width: 100%;
+  }
+  
+  .start-box h2 {
+    font-size: 48px;
+    margin-bottom: 10px;
+  }
+  
+  .start-box p {
+    font-size: 18px;
+    margin-bottom: 20px;
+  }
+  
+  .start-button {
+    background-color: #d97b41;
+    color: white;
+    padding: 12px 24px;
+    font-size: 16px;
+    border-radius: 8px;
+    text-decoration: none;
+    display: inline-block;
+    font-weight: 500;
+  }
+  
+  .start-button:hover {
+    background-color: #b96133;
+  }
+  
+  .hero-img {
+    flex: 1 1 300px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .hero-img img {
+    width: 100%;
+    height: auto;
+    border-radius: 12px;
+  }
+  
+  @media (min-width: 768px) {
+    .hero-img img {
+      max-width: 600px;
+    }
+  }
+  
+  .features,
+  .testimonials,
+  .articles {
+    padding: 60px 40px;
+    background-color: #fff;
+  }
+  
+  .section-title {
+    font-size: 32px;
+    margin-bottom: 30px;
+  }
+  
+  .cards {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+  
+  .card {
+    background-color: #fff7ef;
+    border-radius: 12px;
+    padding: 20px;
+    flex: 1 1 250px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  }
+  
+  .footer {
+    background-color: #f0e4d7;
+    padding: 20px 40px;
+    text-align: center;
+    font-size: 14px;
+    color: #5e503f;
+  }
+  

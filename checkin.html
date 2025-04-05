@@ -3,61 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <title>심리 체크인</title>
-  <style>
-    body {
-      font-family: sans-serif;
-      background: linear-gradient(to bottom, #fff6eb, #fff6eb);
-      margin: 0;
-      padding: 20px;
-    }
-    .container {
-      max-width: 700px;
-      margin: auto;
-      background: white;
-      padding: 40px;
-      border-radius: 20px;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-    }
-    .question {
-      margin-bottom: 100px;
-      opacity: 0.3;
-      transition: opacity 0.3s ease;
-    }
-    .question.active {
-      opacity: 1;
-    }
-    .question h3 {
-      font-size: 24px;
-      text-align: center;
-    }
-    .scale {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 15px;
-      margin-top: 20px;
-    }
-    .scale span {
-      font-weight: bold;
-      white-space: nowrap;
-    }
-    .dot {
-      border-radius: 50%;
-      border: 2px solid #aaa;
-      background: white;
-      width: 24px;
-      height: 24px;
-      cursor: pointer;
-      transition: transform 0.2s ease, background 0.3s, border-color 0.3s;
-    }
-    .dot:hover {
-      transform: scale(1.2);
-    }
-    .dot.selected {
-      background: #893c13;
-      border-color: #893c13;
-    }
-  </style>
+  <link rel="stylesheet" href="checkin.css">
 </head>
 <body>
   <div class="container">
@@ -65,7 +11,7 @@
     <div id="questions-container"></div>
     <div id="result" style="display: none; text-align:center; margin-top: 50px;">
       <h3 style="font-size: 28px;">검사가 완료되었습니다!</h3>
-      <button onclick="goToResult()" style="margin-top: 20px; padding: 10px 20px; font-size: 18px; background: #ee9528; color: white; border: none; border-radius: 8px;">결과 보기</button>
+      <button onclick="goToResult()" class="submit-button">결과 보기</button>
     </div>
   </div>
 
@@ -84,9 +30,10 @@
     ];
 
     const container = document.getElementById("questions-container");
+    const resultBox = document.getElementById("result");
 
     let current = 0;
-    const answers = [];
+    const answers = new Array(questions.length);
 
     questions.forEach((q, i) => {
       const div = document.createElement("div");
@@ -102,26 +49,33 @@
       container.appendChild(div);
     });
 
-    document.querySelectorAll(".dot").forEach(dot => {
-      dot.addEventListener("click", () => {
-        const idx = +dot.dataset.index;
-        const val = +dot.dataset.value;
-        answers[idx] = val;
+    container.addEventListener("click", e => {
+      const dot = e.target.closest(".dot");
+      if (!dot) return;
 
-        // 하나만 선택되도록
-        dot.parentElement.querySelectorAll(".dot").forEach(d => d.classList.remove("selected"));
-        dot.classList.add("selected");
+      const idx = +dot.dataset.index;
+      const val = +dot.dataset.value;
+      answers[idx] = val;
 
-        // 다음 질문 강조
-        const all = document.querySelectorAll(".question");
-        all[idx].classList.remove("active");
-        if (idx + 1 < all.length) {
-          all[idx + 1].classList.add("active");
-          all[idx + 1].scrollIntoView({ behavior: "smooth", block: "center" });
-        } else {
-          document.getElementById("result").style.display = "block";
-        }
-      });
+      dot.parentElement.querySelectorAll(".dot").forEach(d => d.classList.remove("selected"));
+      dot.classList.add("selected");
+
+      const all = document.querySelectorAll(".question");
+      all[idx].classList.remove("active");
+
+      if (idx + 1 < all.length) {
+        all[idx + 1].classList.add("active");
+        all[idx + 1].scrollIntoView({ behavior: "smooth", block: "center" });
+      }
+
+      // 모든 질문에 응답했는지 확인 후 결과 표시
+      const allAnswered = answers.filter(a => typeof a === "number").length === questions.length;
+      if (allAnswered) {
+        resultBox.style.display = "block";
+        setTimeout(() => resultBox.scrollIntoView({ behavior: "smooth", block: "center" }), 200);
+      } else {
+        resultBox.style.display = "none";
+      }
     });
 
     function goToResult() {
