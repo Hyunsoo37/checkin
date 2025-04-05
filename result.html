@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <title>심리 검사 결과</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      background: #f0fdf4;
+      margin: 0;
+      padding: 40px 20px;
+      color: #065f46;
+    }
+    .container {
+      max-width: 700px;
+      margin: auto;
+      background: white;
+      padding: 50px;
+      border-radius: 16px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+      text-align: center;
+    }
+    h1 {
+      font-size: 32px;
+      color: #047857;
+    }
+    p {
+      font-size: 18px;
+      margin-top: 30px;
+    }
+    .score-box {
+      margin-top: 40px;
+      font-size: 22px;
+      background: #ecfdf5;
+      padding: 20px;
+      border-radius: 12px;
+      font-weight: bold;
+    }
+    .home-btn {
+      margin-top: 50px;
+      padding: 12px 24px;
+      font-size: 16px;
+      background: #10b981;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    .home-btn:hover {
+      background: #059669;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>검사 결과</h1>
+    <p>당신의 심리적 특성은 아래와 같습니다:</p>
+    <div class="score-box" id="scoreBox">결과 계산 중...</div>
+    <button class="home-btn" onclick="goHome()">홈으로 돌아가기</button>
+  </div>
+
+  <script>
+    // 예시: 실제 환경에서는 sessionStorage에서 가져오는 방식 추천
+const rawScore = Math.floor(Math.random() * 61) - 30;
+const score = Math.max(0, rawScore + 30); // -30 ~ +30 → 0 ~ 60으로 변환
+const scoreBox = document.getElementById("scoreBox");
+
+let message = "";
+
+if (score >= 51) {
+  message = "당신은 매우 외향적이고 감정 표현이 풍부한 편입니다.";
+} else if (score >= 41) {
+  message = "당신은 외향적인 성향이며 사람들과의 교류를 즐깁니다.";
+} else if (score >= 31) {
+  message = "당신은 다소 외향적이며 감정에 공감하는 편입니다.";
+} else if (score >= 21) {
+  message = "당신은 중립적인 성향입니다. 상황에 따라 유연하게 대처합니다.";
+} else if (score >= 11) {
+  message = "당신은 다소 내향적이며 신중한 성격을 가지고 있습니다.";
+} else if (score >= 1) {
+  message = "당신은 내향적인 성향이며 혼자 있는 시간을 선호합니다.";
+} else {
+  message = "당신은 매우 내향적이며 내면 세계에 집중하는 편입니다.";
+}
+
+scoreBox.innerText = `점수: ${score}점\n${message}`;
+
+
+
+    function goHome() {
+      window.location.href = "심리체크인.html";
+    }
+  </script>
+</body>
+</html>

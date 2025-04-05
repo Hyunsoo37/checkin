@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <title>심리 체크인</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      background: linear-gradient(to bottom, #d1fae5, #bbf7d0);
+      margin: 0;
+      padding: 20px;
+    }
+    .container {
+      max-width: 700px;
+      margin: auto;
+      background: white;
+      padding: 40px;
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    }
+    .question {
+      margin-bottom: 100px;
+      opacity: 0.3;
+      transition: opacity 0.3s ease;
+    }
+    .question.active {
+      opacity: 1;
+    }
+    .question h3 {
+      font-size: 24px;
+      text-align: center;
+    }
+    .scale {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 15px;
+      margin-top: 20px;
+    }
+    .scale span {
+      font-weight: bold;
+      white-space: nowrap;
+    }
+    .dot {
+      border-radius: 50%;
+      border: 2px solid #aaa;
+      background: white;
+      width: 24px;
+      height: 24px;
+      cursor: pointer;
+      transition: transform 0.2s ease;
+    }
+    .dot:hover {
+      transform: scale(1.2);
+    }
+    .dot.selected {
+      background: #34d399;
+      border-color: #34d399;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2 style="text-align:center; font-size: 32px; color: #047857;">심리 체크인</h2>
+    <div id="questions-container"></div>
+    <div id="result" style="display: none; text-align:center; margin-top: 50px;">
+      <h3 style="font-size: 28px;">검사가 완료되었습니다!</h3>
+      <button onclick="goToResult()" style="margin-top: 20px; padding: 10px 20px; font-size: 18px; background: #047857; color: white; border: none; border-radius: 8px;">결과 보기</button>
+    </div>
+  </div>
+
+  <script>
+    const questions = [
+      "주기적으로 새로운 친구를 사귄다.",
+      "복잡하고 참신한 아이디어에 흥미를 느낀다.",
+      "감정적으로 공감 가는 내용이 더 설득력 있다고 느낀다.",
+      "감정을 겉으로 잘 표현하는 편이다.",
+      "즉흥적인 결정을 더 선호한다.",
+      "다른 사람의 고민을 듣고 조언해주는 것을 좋아한다.",
+      "논리적으로 판단하려고 한다.",
+      "새로운 사람을 만나는 것을 부담스럽게 느낀다.",
+      "감정이 얼굴에 쉽게 드러난다.",
+      "혼자 있는 시간이 꼭 필요하다고 느낀다."
+    ];
+
+    const container = document.getElementById("questions-container");
+
+    let current = 0;
+    const answers = [];
+
+    questions.forEach((q, i) => {
+      const div = document.createElement("div");
+      div.className = "question" + (i === 0 ? " active" : "");
+      div.innerHTML = `
+        <h3>${q}</h3>
+        <div class="scale">
+          <span>그렇다</span>
+          ${[3,2,1,0,-1,-2,-3].map(val => `<div class="dot" data-value="${val}" data-index="${i}"></div>`).join('')}
+          <span>그렇지 않다</span>
+        </div>
+      `;
+      container.appendChild(div);
+    });
+
+    document.querySelectorAll(".dot").forEach(dot => {
+      dot.addEventListener("click", () => {
+        const idx = +dot.dataset.index;
+        const val = +dot.dataset.value;
+        answers[idx] = val;
+
+        // 하나만 선택되도록
+        dot.parentElement.querySelectorAll(".dot").forEach(d => d.classList.remove("selected"));
+        dot.classList.add("selected");
+
+        // 다음 질문 강조
+        const all = document.querySelectorAll(".question");
+        all[idx].classList.remove("active");
+        if (idx + 1 < all.length) {
+          all[idx + 1].classList.add("active");
+          all[idx + 1].scrollIntoView({ behavior: "smooth", block: "center" });
+        } else {
+          document.getElementById("result").style.display = "block";
+        }
+      });
+    });
+    function goToResult() {
+  const total = answers.reduce((acc, val) => acc + (val ?? 0), 0);
+  sessionStorage.setItem("psychScore", total);
+  window.location.href = "result.html";
+}
+
+  </script>
+</body>
+</html>

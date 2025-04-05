@@ -1,0 +1,104 @@
+import React, { useState, useEffect, useRef } from "react";
+import { motion } from "framer-motion";
+import { Button } from "@/components/ui/button";
+
+const questions = [
+  "주기적으로 새로운 친구를 사귄다.",
+  "단순하고 직관적인 아이디어보다는 복잡하고 참신한 아이디어에 흥미를 느낀다.",
+  "일반적으로 사실에 기반한 주장보다 감정적으로 공감 가는 내용이 더 설득력 있다고 느낀다.",
+  "감정을 겉으로 잘 표현하는 편이다.",
+  "계획을 세우는 것보다 즉흥적인 결정을 더 선호한다.",
+  "다른 사람의 고민을 듣고 조언해주는 것을 좋아한다.",
+  "감정보다는 논리적으로 상황을 판단하려고 한다.",
+  "새로운 사람을 만나는 것을 부담스럽게 느낀다.",
+  "감정이 얼굴에 쉽게 드러나는 편이다.",
+  "혼자 있는 시간이 꼭 필요하다고 느낀다."
+];
+
+export default function CheckinSurvey() {
+  const [answers, setAnswers] = useState(Array(questions.length).fill(null));
+  const [currentQuestion, setCurrentQuestion] = useState(0);
+  const [isFinished, setIsFinished] = useState(false);
+  const questionRefs = useRef([]);
+
+  const handleAnswer = (index, value) => {
+    const updated = [...answers];
+    updated[index] = value;
+    setAnswers(updated);
+    if (index < questions.length - 1) {
+      setTimeout(() => setCurrentQuestion(index + 1), 900);
+    } else {
+      setIsFinished(true);
+    }
+  };
+
+  useEffect(() => {
+    if (questionRefs.current[currentQuestion]) {
+      questionRefs.current[currentQuestion].scrollIntoView({ behavior: "smooth", block: "center" });
+    }
+  }, [currentQuestion]);
+
+  const getChoiceLabel = (val) => {
+    return val > 0 ? "그렇다" : val < 0 ? "그렇지 않다" : "중립";
+  };
+
+  return (
+    <div className="min-h-screen w-full bg-gradient-to-b from-green-100 to-green-200 flex flex-col items-center justify-start p-8 relative">
+      <div className="absolute inset-0 bg-[url('/bg-pattern.svg')] opacity-10 bg-repeat"></div>
+      <div className="z-10 w-full max-w-4xl bg-white p-10 rounded-2xl shadow-xl overflow-y-auto">
+        {!isFinished ? (
+          <>
+            <h2 className="text-3xl font-bold text-center text-green-700 mb-16">심리 체크인</h2>
+            <div className="space-y-32">
+              {questions.map((question, index) => (
+                <div
+                  key={index}
+                  ref={(el) => (questionRefs.current[index] = el)}
+                  className={`space-y-10 transition-opacity duration-300 ${
+                    index === currentQuestion ? "opacity-100" : "opacity-30"
+                  }`}
+                >
+                  <h3 className="text-2xl font-semibold text-gray-800 text-center">{question}</h3>
+                  <div className="flex items-center justify-center gap-6 w-full px-4">
+                    <span className="text-green-600 text-lg font-medium whitespace-nowrap">그렇다</span>
+                    <div className="flex justify-center flex-1 gap-4">
+                      {[3, 2, 1, 0, -1, -2, -3].map((val, idx) => {
+                        const baseSize = 24;
+                        const size = baseSize + Math.abs(val) * 6;
+                        const label = getChoiceLabel(val);
+                        const isSelected = answers[index] === label && index === currentQuestion;
+                        return (
+                          <motion.button
+                            key={idx}
+                            onClick={() => handleAnswer(index, label)}
+                            whileHover={{ scale: 1.2 }}
+                            disabled={index !== currentQuestion}
+                            className={`rounded-full border-2 transition-all duration-150 ease-in-out focus:outline-none ${
+                              val === 0 ? "border-gray-400" : val > 0 ? "border-green-400" : "border-purple-400"
+                            } ${
+                              isSelected ? "bg-green-400 bg-opacity-60" : ""
+                            } ${index !== currentQuestion ? "cursor-not-allowed" : ""}`}
+                            style={{ width: `${size}px`, height: `${size}px` }}
+                          ></motion.button>
+                        );
+                      })}
+                    </div>
+                    <span className="text-purple-600 text-lg font-medium whitespace-nowrap">그렇지 않다</span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </>
+        ) : (
+          <div className="text-center space-y-6">
+            <h2 className="text-3xl font-semibold text-green-700">검사가 완료되었습니다!</h2>
+            <p className="text-lg text-gray-600">검사 결과를 확인하시겠어요?</p>
+            <Button className="bg-green-600 text-white text-lg px-8 py-4 rounded-full hover:bg-green-700 transition-all">
+              결과 보기
+            </Button>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
