@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <title>심리 검사 결과</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap">
-  <link rel="stylesheet" href="result.css">
+  <link rel="stylesheet" href="../assets/css/result.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
   <style>
     html, body {
@@ -152,7 +152,7 @@
       
       const cert = document.createElement('div');
       cert.className = 'cert-mark';
-      cert.innerHTML = '<img src="image/경기도 G마크.jpg" alt="경기도지사 인증 마크" style="width: 150px; margin: 20px auto;">';
+      cert.innerHTML = '<../img src="image/경기도 G마크.jpg" alt="경기도지사 인증 마크" style="width: 150px; margin: 20px auto;">';
       clone.appendChild(cert);
       
       previewContainer.appendChild(clone);
