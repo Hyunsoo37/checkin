@@ -110,7 +110,7 @@ body {
   }
   
   .card {
-    background-color: #fff7ef;
+    background-color: #fff7ef; /*색*/
     border-radius: 12px;
     padding: 20px;
     flex: 1 1 250px;

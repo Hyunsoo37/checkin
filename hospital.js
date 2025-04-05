@@ -87,6 +87,6 @@ function initMap() {
       });
   }
 
-  // 병원 검색 실행 (고정 위치 사용)
+  // 병원 검색 실행 (고정 위치 사용함)
   searchHospitals(centerPos);
 }

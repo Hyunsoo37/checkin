@@ -10,6 +10,7 @@ header {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  /*하이*/
   padding: 20px 40px;
   background-color: #fff6eb; /* 부드러운 크림색 헤더 */
 }

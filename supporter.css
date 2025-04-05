@@ -75,7 +75,7 @@ body {
   
   .activity-item img {
     width: 100%;
-    height: auto; /* 고정 높이 대신 비율 유지 */
+    height: auto; /* 고정 높이 대신 비율 유지함 */
     max-height: 200px; /* 최대 높이 제한으로 너무 커지지 않도록 */
     object-fit: contain; /* 이미지가 잘리지 않고 전체 보이도록 */
     border-radius: 8px;

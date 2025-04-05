@@ -15,7 +15,7 @@ document.getElementById("join-form").addEventListener("submit", (e) => {
     const email = document.getElementById("email").value;
     const message = document.getElementById("message").value;
 
-    // 간단한 제출 확인 (실제로는 서버로 전송해야 함)
+    // 간단한 제출 확인 (실제로는 서버로 전송해야 한다)
     alert(`신청이 완료되었습니다!\n이름: ${name}\n이메일: ${email}\n메시지: ${message || "없음"}`);
     
     // 폼 초기화 및 숨김
